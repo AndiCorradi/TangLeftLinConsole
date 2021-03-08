@@ -9,7 +9,7 @@
 #include <string> // req. for getline (read userinput as string)
 #include <conio.h> // req. for_get(ch) (returns ASCI int value of a keypress)
 #include <iomanip> // req. to format console output (setw)
-#include <limits>
+#include <limits> // req.only for VS Code ? (compiles just fin in VS community edition in windows 10)
 
 using namespace std; // define standard namespace
 
