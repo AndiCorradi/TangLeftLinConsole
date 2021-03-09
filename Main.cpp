@@ -7,9 +7,10 @@
 #include <iostream> // req. for cout (Console output)
 #include <time.h> // req. to calculate "AmmountOfDaysOfCurrentMonth" and "CalcCurrentDaysOfMonth"
 #include <string> // req. for getline (read userinput as string)
-#include <conio.h> // req. for_get(ch) (returns ASCI int value of a keypress)
 #include <iomanip> // req. to format console output (setw)
 #include <limits> // req.only for VS Code ? (compiles just fin in VS community edition in windows 10)
+#include <termios.h> // req. for getch()
+#include <unistd.h> // req. for getch()
 
 using namespace std; // define standard namespace
 
@@ -32,7 +33,7 @@ int CalculateDailyBudget(int, int);
 void ResultConsoleOutput();
 int AmmountOfDaysOfCurrentMonth();
 int CalcCurrentDaysOfMonth();
-
+int getch();
 
 int main() // main programm entry point
 
@@ -45,7 +46,7 @@ int main() // main programm entry point
 		DailyBudget = CalculateDailyBudget(Balance, DaysToPayday); // Calculate daily budget
 		ResultConsoleOutput(); // Result Console Output
 		cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clears the Input Buffer
-		escape = _getch(); // returns ASCI Int value of a keypress to decide if the while loop should run again
+		escape = getch(); // returns ASCI Value of a Keypress without press enter
 	}
 }
 
@@ -54,7 +55,7 @@ int main() // main programm entry point
 void ConsoleBanner() // void function with no return and no input parameters
 
 {
-	system("cls"); // clear console ("cls" is dedicated to windows, change to "clear" for Linux)
+	system("clear"); // clear console
 	cout << "====================TangLeft====================" << endl; //console output
 	cout << " (calculates the daily budget until nex payday) " << endl;
 	cout << "================================================" << endl;
@@ -226,4 +227,17 @@ int CalcCurrentDaysOfMonth() // datatype integer function without argument
 	int DayOfMonth = nowlocal.tm_mday; // set and initialize variable with structure.datafield "tm_mday" (current day of the month)
 
 	return DayOfMonth; // returns the result to the main method
+}
+
+int getch() 
+{
+  struct termios oldt, newt;
+  int ch;
+  tcgetattr( STDIN_FILENO, &oldt );
+  newt = oldt;
+  newt.c_lflag &= ~( ICANON | ECHO );
+  tcsetattr( STDIN_FILENO, TCSANOW, &newt );
+  ch = getchar();
+  tcsetattr( STDIN_FILENO, TCSANOW, &oldt );
+  return ch;
 }
