@@ -1,6 +1,6 @@
 // this console programm calculates the daily budget left until next payday based on your balance and payday input.
-// Version: 1.2
-// author: andi@corradi.ch release Date: 16.feb 2021
+// Version: 1.3
+// author: andi@corradi.ch release Date: 19.march 2021
 
 // Load header files
 
@@ -155,13 +155,13 @@ int CalcDaysToPayday(int Payday) // integer function with argument (integer para
 	int DayOfMonth = CalcCurrentDaysOfMonth(); // set and initialize local variable with result of function "CalcCurrentDayOfMonth"
 	int AmmountDaysOfCurrentMonth = AmmountOfDaysOfCurrentMonth(); //set and initialize local variable with result of function "AmmountOfDaysOfCurrentMonth"
 
-	if (DayOfMonth < 24) // check if DayOfMonth is below 24
+	if (DayOfMonth < PayDay) // check if DayOfMonth is below PayDay
 	{
 		DaysToPayday = PayDay - DayOfMonth; // subtract DayOfMonth from PayDay to get DaysToPayDay
 	}
 	else // if DayOfMonth is higher then 24:
 	{
-		DaysToPayday = AmmountDaysOfCurrentMonth - DayOfMonth + 24; // subtract DayOfMonth from AmmountDaysOfCurrentMonth and add 24 to ger DaysToPayday
+		DaysToPayday = AmmountDaysOfCurrentMonth - DayOfMonth + PayDay; // subtract DayOfMonth from AmmountDaysOfCurrentMonth and add PayDay to get DaysToPayday
 	}
 
 	return DaysToPayday; // returns the result to the main function
